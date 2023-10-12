@@ -1,0 +1,63 @@
+[gd_scene load_steps=9 format=3 uid="uid://bumntqs2j4h3"]
+
+[ext_resource type="Texture2D" uid="uid://bgcsakdatkfwb" path="res://art/Items/Weapons/BigSword/Sprite.png" id="1_3n1xj"]
+[ext_resource type="PackedScene" uid="uid://bk4o7j5hahtkb" path="res://collectable/collectable.tscn" id="1_q5lvi"]
+[ext_resource type="Script" path="res://scripts/Collectable/CollectableSword.cs" id="2_fuuuj"]
+[ext_resource type="Resource" uid="uid://dtfjingb6dc8g" path="res://resources/sword.tres" id="3_3dulw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j43u6"]
+resource_local_to_scene = true
+size = Vector2(6, 17)
+
+[sub_resource type="Animation" id="Animation_qy6xj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_esuhk"]
+resource_name = "sword_spin"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.5708, 3.14159, 4.71239, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ar12s"]
+_data = {
+"RESET": SubResource("Animation_qy6xj"),
+"sword_spin": SubResource("Animation_esuhk")
+}
+
+[node name="CollectableSword" instance=ExtResource("1_q5lvi")]
+script = ExtResource("2_fuuuj")
+InventoryItem = ExtResource("3_3dulw")
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_j43u6")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("1_3n1xj")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_ar12s")
+}

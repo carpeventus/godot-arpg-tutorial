@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b42pn82rw62d2"]
+
+[ext_resource type="PackedScene" uid="uid://dbu74po86nfhs" path="res://hit_box.tscn" id="1_ujkvk"]
+[ext_resource type="Texture2D" uid="uid://bgcsakdatkfwb" path="res://art/Items/Weapons/BigSword/Sprite.png" id="2_fsupq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rn4c"]
+size = Vector2(4, 10)
+
+[node name="PlayerSword" instance=ExtResource("1_ujkvk")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+position = Vector2(0, -5)
+texture = ExtResource("2_fsupq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_8rn4c")

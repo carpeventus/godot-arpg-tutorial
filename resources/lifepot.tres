@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://dgr0hsa1lwof0"]
+
+[ext_resource type="Texture2D" uid="uid://caobr7prj1veq" path="res://art/Items/Potion/LifePot.png" id="1_povfd"]
+[ext_resource type="Script" path="res://scripts/Resource/Inventory/InventoryItem.cs" id="2_7rtv4"]
+
+[resource]
+script = ExtResource("2_7rtv4")
+Name = "LifePot"
+Texture = ExtResource("1_povfd")
+MaxAmount = 4

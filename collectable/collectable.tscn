@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk4o7j5hahtkb"]
+
+[ext_resource type="Script" path="res://scripts/Collectable/Collectable.cs" id="1_jsp04"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rmdlk"]
+resource_local_to_scene = true
+
+[node name="Collectable" type="Area2D"]
+collision_layer = 32
+collision_mask = 2
+script = ExtResource("1_jsp04")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.75, 0)
+shape = SubResource("RectangleShape2D_rmdlk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
