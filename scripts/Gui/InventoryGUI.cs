@@ -10,9 +10,12 @@ public partial class InventoryGUI : Control {
     public Array<InventorySlotGui> InventorySlotGuiArray { get; private set; } = new();
     // 库存的数据
     public Inventory InventoryRes { get; private set; }
+
+    public PackedScene ItemStackGuiScene { get; private set; }
     
     public override void _Ready() {
         InventoryRes = ResourceLoader.Load<Inventory>("res://resources/inventory.tres");
+        ItemStackGuiScene =  ResourceLoader.Load<PackedScene>("res://hud/item_stack_gui.tscn");
         Array<Node> slotGuiArray = GetNode("NinePatchRect/GridContainer").GetChildren();
         foreach (var slotGui in slotGuiArray) {
             if (slotGui is InventorySlotGui inventorySlotGui) {
@@ -20,12 +23,24 @@ public partial class InventoryGUI : Control {
             }
         }
 
+        CollectedSlots();
         InventoryRes.InventoryChanged += UpdateInventoryGui;
         UpdateInventoryGui();
     }
     private void UpdateInventoryGui() {
         for (var i = 0; i < InventoryRes.InventorySlots.Count; i++) {
-            InventorySlotGuiArray[i].UpdateSlot(InventoryRes.InventorySlots[i]);
+            InventorySlot slotRes = InventoryRes.InventorySlots[i];
+            if (slotRes.InventoryItem is null) {
+                continue;
+            }
+            ItemStackGui stackGui = InventorySlotGuiArray[i].ItemStackGui;
+            if (stackGui is null) {
+                stackGui = ItemStackGuiScene.Instantiate<ItemStackGui>();
+                InventorySlotGuiArray[i].InsertItem(stackGui);
+            }
+
+            stackGui.InventorySlot = slotRes;
+            stackGui.UpdateSlot();
         }
     }
 
@@ -43,4 +58,13 @@ public partial class InventoryGUI : Control {
         GetTree().Paused = false;
     }
 
+
+    private void CollectedSlots() {
+        foreach (var slot in InventorySlotGuiArray) {
+            slot.Pressed += () => {OnSlotClicked(slot);};
+        }
+    }
+    private void OnSlotClicked(InventorySlotGui slotGui) {
+        
+    }
 }

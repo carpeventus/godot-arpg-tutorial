@@ -1,31 +1,22 @@
 using Godot;
 using System;
 
-public partial class InventorySlotGui : Panel {
+public partial class InventorySlotGui : Button {
 	private Sprite2D _backgroundSprite;
-	private Sprite2D _itemSprite;
-	private Label _label;
+	private CenterContainer _centerContainer;
+
+	public ItemStackGui ItemStackGui { get; private set; }
+	
 	
 	public override void _Ready() {
 		_backgroundSprite = GetNode<Sprite2D>("Background");
-		_itemSprite = GetNode<Sprite2D>("CenterContainer/Panel/Item");
-		_label = GetNode<Label>("CenterContainer/Panel/Label");
-	}
+		_centerContainer = GetNode<CenterContainer>("CenterContainer");
 
-	public void UpdateSlot(InventorySlot slot) {
-		if (slot.InventoryItem is null) {
-			_backgroundSprite.Frame = 0;
-			_itemSprite.Visible = false;
-			_label.Visible = false;
-		}
-		else {
-			_backgroundSprite.Frame = 1;
-			_itemSprite.Visible = true;
-			_itemSprite.Texture = slot.InventoryItem.Texture;
-			if (slot.Amount > 1) {
-				_label.Visible = true;
-				_label.Text = slot.Amount.ToString();
-			}
-		}
+	}
+	
+	public void InsertItem(ItemStackGui itemStack) {
+		ItemStackGui = itemStack;
+		_backgroundSprite.Frame = 1;
+		_centerContainer.AddChild(itemStack);
 	}
 }
